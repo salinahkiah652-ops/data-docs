@@ -49,7 +49,8 @@ The [FxA oauth server](https://github.com/mozilla/fxa/pull/3176) logs metrics ev
 
 In 2023, we integrated Glean with Mozilla Accounts and Event Metrics are now available for both the server-side and client-side.
 
-To explore available metrics, visit [Glean Dictionary](https://dictionary.telemetry.mozilla.org/) and browse the [`accounts_backend`](https://dictionary.telemetry.mozilla.org/apps/accounts_backend) and [`accounts_frontend`](https://dictionary.telemetry.mozilla.org/apps/accounts_frontend) applications.
+To explore available metrics, visit [Glean Dictionary](https://dictionary.telemetry.mozilla.org/) and browse the [`accounts_backend`](https://dictionary.telemetry.mozilla.org/apps/accounts_backend) and [`accounts_frontend`](https://dictionary.telemetry.
+mozilla.org/apps/accounts_frontend) applications.
 
 All events are sent in `events` ping. The most effective way to query them is to use the `events_stream` tables in BigQuery: [`accounts_frontend.events_stream`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.accounts_frontend.events_stream,PROD)>) and [`accounts_backend.events_stream`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,mozdata.accounts_backend.events_stream,PROD)>). They are accessible in Looker via `Events Stream Table` explores. Because they have extra properties packaged as a JSON structure, when these are needed it is best to use the `Event Counts` explores.
 
@@ -65,7 +66,11 @@ If analysis requires a metric that is available in both frontend and backend, ba
 
 There are two additional legacy event types described below:
 
-[**Flow Metrics**](https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md): these are an older set of metrics events that can be queried through the `firefox_accounts` dataset in the `mozdata` project in BigQuery. See [this documentation](https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md) for detailed description of the types of flow events that are logged and the tables that contain them (note this documentation does not contain an exhaustive list of all flow metrics but is generally still accurate about the ones that are described). These will likely evolve significantly in 2024.
+[**
+Flow Metrics
+**](http
+s://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md): these are an older set of metrics events that can be queried through the `firefox_accounts` dataset in the `mozdata` project in BigQuery. See [this documentation](https://
+re logged and the tables that contain them (note this documentation does not contain an exhaustive list of all flow metrics but is generally still accurate about the ones that are described). These will likely evolve significantly in 2024.
 
 **Amplitude Events**: FxA started to send metrics events to Amplitude circa October 2017 and ended around June 2020. While we stopped using Amplitude, the term Amplitude Events lives on to reference this set of events. Amplitude events can be queried through the `moz-fx-data-shared-prod.firefox_accounts` dataset in BigQuery. [`moz-fx-data-shared-prod.firefox_accounts.fxa_content_auth_events`](https://github.com/mozilla/bigquery-etl/blob/main/sql/moz-fx-data-shared-prod/firefox_accounts/fxa_content_auth_events/view.sql) is probably the easiest BigQuery view to use, though it does not contain email bounce events. These are being completely replaced by the Glean Event Metrics and will be removed in 2024. FxA's Amplitude metrics were originally just re-configured and re-named versions of the flow metrics. However things have since diverged a bit and there are now metrics events that only have an Amplitude version but no corresponding flow event, and vice-versa. If you are wondering whether a certain event is logged its likely you will have to check both data sources.
 
